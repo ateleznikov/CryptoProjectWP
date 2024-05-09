@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CryptoApiService } from '../../services/crypto-api.service';
-import { ExchangeRate } from '../../interfaces/ExchangeRate';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,32 +10,19 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./crypto-table.component.css']
 })
 export class CryptoTableComponent implements OnInit {
-  assetIds: string[] = ['ETH', 'BNB', 'XRP', 'SOL', 'TON', 'ADA', 'LTC', 'DOT', 'MATIC', 'AVAX', 'LINK'];
-  exchangeRates: ExchangeRate[] = [];
 
-  
+  cryptoData: any[] | undefined;
 
-  constructor(private cryptoApiService: CryptoApiService) {}
+  constructor(private cryptoApiService: CryptoApiService) { }
 
-  ngOnInit() {
-    this.getExchangeRates();
+  ngOnInit(): void {
+    this.getCryptoData();
   }
 
-  getExchangeRates() {
-    this.assetIds.forEach((assetId, index) => {
-      setTimeout(() => {
-        this.cryptoApiService.getExchangeRate(assetId, 'EUR')
-          .subscribe(
-            (rate: ExchangeRate) => {
-              this.exchangeRates.push(rate);
-            },
-            (error) => {
-              console.error('Error fetching exchange rate:', error);
-            }
-          );
-      }, index * 1000);
-    });
+  getCryptoData(): void {
+    this.cryptoApiService.getCryptoData('eur', 25)
+      .subscribe(data => {
+        this.cryptoData = data;
+      });
   }
-
-  
 }
