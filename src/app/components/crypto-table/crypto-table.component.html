@@ -1,0 +1,25 @@
+<div>
+    <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>1 Hour % Change</th>
+            <th>24 Hour % Change</th>
+            <th>Volume (24h)</th>
+            <th>Price</th>
+            <th>Mini Graph</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rate of exchangeRates">
+            <td>{{ rate.asset_id_base }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ rate.rate}}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  
