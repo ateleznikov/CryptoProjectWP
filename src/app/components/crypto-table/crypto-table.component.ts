@@ -20,9 +20,45 @@ export class CryptoTableComponent implements OnInit {
   }
 
   getCryptoData(): void {
-    this.cryptoApiService.getCryptoData('eur', 25)
-      .subscribe(data => {
-        this.cryptoData = data;
+    this.cryptoApiService.getCryptoData('eur', 10)
+    .subscribe(data => {
+      this.cryptoData = data.map(crypto => {
+        crypto.price_change_percentage_24h = crypto.price_change_percentage_24h.toFixed(2);
+        crypto.current_price = '€' + crypto.current_price.toFixed(2);
+
+        crypto.total_volume = this.formatVolume(crypto.total_volume);
+
+        crypto.market_cap = this.formatMarketCap(crypto.market_cap);
+
+        return crypto;
       });
+    });
+  }
+  private formatVolume(volume: number): string {
+    if (volume >= 1e12) {
+      return (volume / 1e12).toFixed(1) + 'T';
+    } else if (volume >= 1e9) {
+      return (volume / 1e9).toFixed(1) + 'B';
+    } else if (volume >= 1e6) {
+      return (volume / 1e6).toFixed(1) + 'M';
+    } else if (volume >= 1e3) {
+      return (volume / 1e3).toFixed(1) + 'K';
+    } else {
+      return volume.toFixed(0);
+    }
+  }
+  private formatMarketCap(marketCap: number): string {
+    if (marketCap >= 1e12) {
+      return (marketCap / 1e12).toFixed(1) + 'T';
+    } else if (marketCap >= 1e9) {
+      return (marketCap / 1e9).toFixed(1) + 'B';
+    } else if (marketCap >= 1e6) {
+      return (marketCap / 1e6).toFixed(1) + 'M';
+    } else if (marketCap >= 1e3) {
+      return (marketCap / 1e3).toFixed(1) + 'K';
+    } else {
+      return marketCap.toFixed(0);
+    }
   }
 }
+

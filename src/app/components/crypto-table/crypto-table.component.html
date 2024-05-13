@@ -1,24 +1,29 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Symbol</th>
-      <th>Price</th>
-      <th>Price Change (24h)</th>
-      <th>Total Volume</th>
-      <th>Market Cap</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let crypto of cryptoData">
-      <td><img [src]="crypto.image" alt="{{ crypto.name }}" height="20">{{ crypto.symbol }}</td>
-      <td>{{ crypto.current_price }}</td>
-      <td>
-        <span [ngClass]="{'text-success': crypto.price_change_percentage_24h >= 0, 'text-danger': crypto.price_change_percentage_24h < 0}">
-          {{ crypto.price_change_percentage_24h }}%
-        </span>
-      </td>
-      <td>{{ crypto.total_volume }}</td>
-      <td>{{ crypto.market_cap }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Price</th>
+        <th>Price Change (24h)</th>
+        <th>Total Volume</th>
+        <th>Market Cap</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let crypto of cryptoData">
+        <td style="display: flex; align-items: center;"> 
+          <img [src]="crypto.image" alt="{{ crypto.name }}" height="20">
+          <span style="margin-left: 5px;">{{ crypto.name | uppercase }}</span>
+        </td>
+        <td>{{ crypto.current_price }}</td>
+        <td>
+          <span [ngClass]="{'text-success': crypto.price_change_percentage_24h >= 0, 'text-danger': crypto.price_change_percentage_24h < 0}">
+            {{ crypto.price_change_percentage_24h }}%
+          </span>
+        </td>
+        <td>{{ crypto.total_volume }}</td>
+        <td>{{ crypto.market_cap }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
