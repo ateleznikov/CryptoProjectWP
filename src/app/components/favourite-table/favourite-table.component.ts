@@ -21,6 +21,9 @@ export class FavouriteTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFavouriteCryptos();
+    this.favoriteService.favoritesUpdated.subscribe(() => {
+      this.getFavouriteCryptos();
+    });
   }
 
   getFavouriteCryptos(): void {
@@ -29,9 +32,15 @@ export class FavouriteTableComponent implements OnInit {
         if (response && response.favouriteCrypto) {
           const favouriteIds = response.favouriteCrypto.map((crypto: any) => crypto.id);
           console.log('Fetched IDs:', favouriteIds);
-          this.fetchCryptoData(favouriteIds);
+          if (favouriteIds.length === 0) {
+            console.warn('No favorites found in the database.');
+            this.favouriteCryptos = [];
+          } else {
+            this.fetchCryptoData(favouriteIds);
+          }
         } else {
           console.warn('No favorites found in the response.');
+          this.favouriteCryptos = []; 
         }
       },
       (error: any) => {
@@ -39,7 +48,7 @@ export class FavouriteTableComponent implements OnInit {
       }
     );
   }
-  
+
   fetchCryptoData(ids: string[]): void {
     console.log('IDs received in fetchCryptoData:', ids);
     this.favouriteCryptoApiService.getFavouriteCryptoData('eur', ids).subscribe(
@@ -59,6 +68,18 @@ export class FavouriteTableComponent implements OnInit {
       }
     );
   }
+  removeFromFavorites(crypto: any): void {
+    this.favoriteService.deleteFromFavorites(crypto.id).subscribe(
+      () => {
+        console.log('Crypto removed from favorites:', crypto);
+        this.getFavouriteCryptos();
+      },
+      (error: any) => {
+        console.error('Error removing crypto from favorites:', error);
+      }
+    );
+  }
+
   private formatVolume(volume: number): string {
     if (volume >= 1e12) {
       return (volume / 1e12).toFixed(1) + 'T';
@@ -85,4 +106,5 @@ export class FavouriteTableComponent implements OnInit {
       return marketCap.toFixed(0);
     }
   }
+  
 }

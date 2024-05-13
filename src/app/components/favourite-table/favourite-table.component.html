@@ -16,7 +16,7 @@
         <tbody>
           <tr *ngFor="let crypto of favouriteCryptos">
             <td>
-              <div class="d-flex align-items-center">
+              <div>
                 <img [src]="crypto.image" alt="{{ crypto.name }}" class="mr-2" width="25" height="25">
                 <span>{{ crypto.name }}</span>
               </div>
@@ -31,7 +31,7 @@
             <td>{{ crypto.total_volume }}</td>
             <td>{{ crypto.market_cap }}</td>
             <td>
-              <!-- <button class="btn btn-danger btn-sm" (click)="removeFromFavourites(crypto)">Remove</button> -->
+              <button class="btn btn-light" type="submit" (click)="removeFromFavorites(crypto)">Remove</button>
             </td>
           </tr>
         </tbody>

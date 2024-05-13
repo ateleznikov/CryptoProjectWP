@@ -69,11 +69,10 @@ export class CryptoTableComponent implements OnInit {
       .subscribe(
         response => {
           console.log('Crypto added to favorites:', response);
-          // Optionally, you can show a success message to the user
+          this.favoriteService.favoritesUpdated.next();
         },
         error => {
           console.error('Error adding crypto to favorites:', error);
-          // Optionally, you can show an error message to the user
         }
       );
   }
