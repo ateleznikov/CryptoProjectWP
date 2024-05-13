@@ -2,6 +2,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th></th>
         <th>Symbol</th>
         <th>Price</th>
         <th>Price Change (24h)</th>
@@ -11,6 +12,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let crypto of cryptoData">
+        <td>
+          <button (click)="addToFavorites(crypto)">Add to Favorites</button>
+        </td>
         <td style="display: flex; align-items: center;"> 
           <img [src]="crypto.image" alt="{{ crypto.name }}" height="20">
           <span style="margin-left: 5px;">{{ crypto.name | uppercase }}</span>

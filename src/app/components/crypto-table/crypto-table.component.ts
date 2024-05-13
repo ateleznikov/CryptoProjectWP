@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CryptoApiService } from '../../services/crypto-api.service';
 import { CommonModule } from '@angular/common';
+import { FavoriteService } from '../../services/favourite.service';
 
 @Component({
   selector: 'app-crypto-table',
@@ -13,7 +14,10 @@ export class CryptoTableComponent implements OnInit {
 
   cryptoData: any[] | undefined;
 
-  constructor(private cryptoApiService: CryptoApiService) { }
+  constructor(
+    private cryptoApiService: CryptoApiService,
+    private favoriteService: FavoriteService
+  ) { }
 
   ngOnInit(): void {
     this.getCryptoData();
@@ -59,6 +63,19 @@ export class CryptoTableComponent implements OnInit {
     } else {
       return marketCap.toFixed(0);
     }
+  }
+  addToFavorites(crypto: any): void {
+    this.favoriteService.addToFavorites(crypto.id)
+      .subscribe(
+        response => {
+          console.log('Crypto added to favorites:', response);
+          // Optionally, you can show a success message to the user
+        },
+        error => {
+          console.error('Error adding crypto to favorites:', error);
+          // Optionally, you can show an error message to the user
+        }
+      );
   }
 }
 

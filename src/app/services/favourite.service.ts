@@ -7,15 +7,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FavoriteService {
-  private baseUrl = 'http://localhost:3000/api/favouriteCrypto';
+  private baseUrl = 'http://localhost:5050';
 
   constructor(private http: HttpClient) { }
 
-  addToFavorites(cryptoName: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/favouriteCrypto`, { cryptoName });
+  addToFavorites(id: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/favouriteCrypto`, { id });
   }
 
-  getFavorites(u): Observable<any> {
+  getFavorites(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/favouriteCrypto/`);
   }
 }
