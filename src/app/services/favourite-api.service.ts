@@ -5,13 +5,15 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class CryptoApiService {
+export class FavouriteCryptoApiService {
   private baseUrl = 'https://api.coingecko.com/api/v3';
 
   constructor(private http: HttpClient) { }
 
-  getCryptoData(vsCurrency: string, perPage: number, ids?: string): Observable<any[]> {
-    let url = `${this.baseUrl}/coins/markets?vs_currency=${vsCurrency}&per_page=${perPage}`;
+  getFavouriteCryptoData(vsCurrency: string, ids: string[]): Observable<any[]> {
+    const idsParam = ids.join(',');
+    const url = `${this.baseUrl}/coins/markets?vs_currency=${vsCurrency}&ids=${idsParam}`;
+
     return this.http.get<any[]>(url);
   }
 }

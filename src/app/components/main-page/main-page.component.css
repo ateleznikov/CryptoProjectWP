@@ -1,0 +1,15 @@
+.container {
+    max-width: 75em; 
+    margin: 0 auto; 
+    padding: 1.25em; 
+}
+
+.crypto-table-container {
+    margin-top: 1em;
+    border: 0.0625em solid #ccc; 
+    border-radius: 0.3125em; 
+    padding: 1.25em; 
+}
+.buttons button {
+    margin-right: 0.5em;
+}
